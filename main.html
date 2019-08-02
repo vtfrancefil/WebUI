@@ -43,58 +43,6 @@
             kendo.culture("en-GB");
         });
     </script>
-    <script>
-        $(document).ready(function () {
-            var popupNotification = $("#popupNotification").kendoNotification({
-                position: {
-                    top: 30
-                },
-                width: "60rem",
-                animation: {
-                    open: {
-                        effects: "slideIn:left"
-                    },
-                    close: {
-                        effects: "slideIn:left",
-                        reverse: true
-                    }
-                }
-            }).data("kendoNotification");
-            var staticNotification = $("#staticNotification").kendoNotification({
-                appendTo: "#appendto",
-                animation: {
-                    open: {
-                        effects: "slideIn:left"
-                    },
-                    close: {
-                        effects: "slideIn:left",
-                        reverse: true
-                    }
-                }
-            }).data("kendoNotification");
-
-            $("#showPopupNotification").click(function () {
-                popupNotification.hide();
-                var d = new Date();
-                popupNotification.show(kendo.toString(d, 'HH:mm:ss.') + kendo.toString(d
-                    .getMilliseconds(), "000"), "error");
-            });
-
-            $("#showStaticNotification").click(function () {
-                var d = new Date();
-                staticNotification.show(kendo.toString(d, 'HH:mm:ss.') + kendo.toString(d
-                    .getMilliseconds(), "000"), "info");
-                var container = $(staticNotification.options.appendTo);
-                container.scrollTop(container[0].scrollHeight);
-            });
-
-            $("#hideAllNotifications").click(function () {
-                popupNotification.hide();
-                staticNotification.hide();
-            });
-
-        });
-    </script>
 </body>
 
 </html>
