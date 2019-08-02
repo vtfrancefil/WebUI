@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Main Page</title>
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
     <link rel="stylesheet" href="lib/kendo/styles/kendo.common-bootstrap.min.css" />
     <link rel="stylesheet" href="lib/kendo/styles/kendo.bootstrap.min.css" />
     <link rel="stylesheet" href="lib/lato/latofonts.css" />
@@ -31,9 +31,49 @@
         </div>
     </nav>
     <div class="container-fluid">
-        <h3>Basic Navbar Example</h3>
-        <div ></div>
-        <p>A navigation bar is a navigation header that is placed at the top of the page.</p>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <label class="radio-inline"><input type="radio" id="optradio1" value="1" name="optradio">Option
+                    1</label>
+                <label class="radio-inline"><input type="radio" id="optradio2" value="2" name="optradio">Option
+                    2</label>
+                <label class="radio-inline"><input type="radio" id="optradio3" value="3" name="optradio">Option
+                    3</label>
+
+                <button type="button" class="btn btn-danger" id="btnRadio">button</button>
+                <div id="radiotext"></div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="btn-group" data-toggle="buttons" id="state">
+                    <label class="btn btn-primary">
+                        <input type="radio" name="options" id="option1" autocomplete="off"> Radio 1
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Radio 2
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> Radio 3
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="btn-group" role="group" aria-label="Basic example" id="selector">
+                    <button type="button" class="btn btn-secondary">Left</button>
+                    <button type="button" class="btn btn-secondary">Middle</button>
+                    <button type="button" class="btn btn-secondary">Right</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
@@ -47,10 +87,26 @@
         $(document).ready(function () {
             kendo.culture("en-GB");
             document.getElementById("culture-name").innerHTML = kendo.culture().name;
+            $("#optradio2").prop("checked", true);
+            $("#state > label:nth-child(2)").trigger("click");
+            setInterval(function () {
+                document.getElementById("display-time").innerHTML = kendo.toString(new Date(), "g");
+            }, 1000);
 
-            setInterval(function(){
-                document.getElementById("display-time").innerHTML= kendo.toString(new Date(), "g") ;
-            },1000);
+            $("#btnRadio").click(function () {
+                $("#radiotext").text($("input[name=optradio]:checked").val());
+            });
+
+            $('#selector button').click(function () {
+                $(this).addClass('active').siblings().removeClass('active');
+                $(this).removeClass("btn-secondary").addClass("btn-primary");
+                $(this).siblings().addClass("btn-secondary").removeClass("btn-primary");
+            });
+            
+            $("#state > label").on('click', function(){
+                console.log($(this).text().trim());
+            });
+
         });
     </script>
 </body>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="lib/kendo/styles/kendo.common-bootstrap.min.css" />
+    <link rel="stylesheet" href="lib/kendo/styles/kendo.bootstrap.min.css" />
+    <link rel="stylesheet" href="lib/lato/latofonts.css" />
+    <link rel="stylesheet" href="lib/lato/latostyle.css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Pulse</a>
+            </div>
+            <ul class="nav navbar-nav pull-right">
+                <li><a href="#"><i class="fa fa-fw fa-list"></i></a></li>
+                <li><a href="#"><i class="fa fa-fw fa-cloud"></i></a></li>
+                <li><a href="#"><i class="fa fa-fw fa-gear"></i></a></li>
+                <li><a href="#"><i class="fa fa-fw fa-forumbee"></i></a></li>
+                <li><a href="#" id="display-time"></a></li>
+                <li><a href="#" id="culture-name"></a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <h3>Basic Navbar Example</h3>
+        <div ></div>
+        <p>A navigation bar is a navigation header that is placed at the top of the page.</p>
+    </div>
+
+
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="lib/kendo/js/kendo.all.min.js"></script>
+    <script src="lib/kendo/js/kendo.timezones.min.js"></script>
+    <script src="lib/kendo/js/cultures/kendo.culture.en-GB.min.js"></script>
+    <script src="lib/kendo/js/cultures/kendo.culture.fr-FR.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            kendo.culture("en-GB");
+            document.getElementById("culture-name").innerHTML = kendo.culture().name;
+
+            setInterval(function(){
+                document.getElementById("display-time").innerHTML= kendo.toString(new Date(), "g") ;
+            },1000);
+        });
+    </script>
+</body>
+
+</html>
