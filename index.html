@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title Page</title>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="lib/kendo/styles/kendo.common-bootstrap.min.css" />
+    <link rel="stylesheet" href="lib/kendo/styles/kendo.bootstrap.min.css" />
+
+</head>
+
+<body>
+    <div id="example">
+
+        <span id="popupNotification"></span>
+        <span id="staticNotification"></span>
+
+        <div class="demo-section k-content">
+            <h4>Show notification</h4>
+            <p>
+                <button id="showPopupNotification" class="k-button">As a popup at bottom-right</button><br />
+                <button id="showStaticNotification" class="k-button">Static in the panel below</button>
+            </p>
+            <div style="padding-top: 1em;">
+                <h4>Hide notification</h4>
+                <button id="hideAllNotifications" class="k-button">Hide All Notifications</button>
+            </div>
+        </div>
+
+        <div id="appendto" class="demo-section k-content"></div>
+
+        <style>
+            .demo-section {
+                text-align: center;
+                line-height: 4em;
+            }
+
+            .demo-section .k-button {
+                width: 250px;
+            }
+        </style>
+    </div>
+
+
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="lib/kendo/js/kendo.all.min.js"></script>
+    <script src="lib/kendo/js/kendo.timezones.min.js"></script>
+    <script src="lib/kendo/js/cultures/kendo.culture.en-GB.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            kendo.culture("en-GB");
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var popupNotification = $("#popupNotification").kendoNotification({
+                position: {
+                    top: 30
+                },
+                width: "60rem",
+                animation: {
+                    open: {
+                        effects: "slideIn:left"
+                    },
+                    close: {
+                        effects: "slideIn:left",
+                        reverse: true
+                    }
+                }
+            }).data("kendoNotification");
+            var staticNotification = $("#staticNotification").kendoNotification({
+                appendTo: "#appendto",
+                animation: {
+                    open: {
+                        effects: "slideIn:left"
+                    },
+                    close: {
+                        effects: "slideIn:left",
+                        reverse: true
+                    }
+                }
+            }).data("kendoNotification");
+
+            $("#showPopupNotification").click(function () {
+                popupNotification.hide();
+                var d = new Date();
+                popupNotification.show(kendo.toString(d, 'HH:mm:ss.') + kendo.toString(d
+                    .getMilliseconds(), "000"), "error");
+            });
+
+            $("#showStaticNotification").click(function () {
+                var d = new Date();
+                staticNotification.show(kendo.toString(d, 'HH:mm:ss.') + kendo.toString(d
+                    .getMilliseconds(), "000"), "info");
+                var container = $(staticNotification.options.appendTo);
+                container.scrollTop(container[0].scrollHeight);
+            });
+
+            $("#hideAllNotifications").click(function () {
+                popupNotification.hide();
+                staticNotification.hide();
+            });
+
+        });
+    </script>
+</body>
+
+</html>

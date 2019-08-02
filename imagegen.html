@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title Page</title>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="lib/kendo/styles/kendo.common-bootstrap.min.css" />
+    <link rel="stylesheet" href="lib/kendo/styles/kendo.bootstrap.min.css" />
+
+</head>
+
+<body>
+    <div id="example">
+        <div id="chart"></div>
+        <a download="export.png" id="export" class="k-button">Export PNG</a>
+
+    </div>
+
+
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="lib/kendo/js/kendo.all.min.js"></script>
+    <script src="lib/kendo/js/kendo.timezones.min.js"></script>
+    <script src="lib/kendo/js/cultures/kendo.culture.en-GB.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            kendo.culture("en-GB");
+        });
+    </script>
+
+    <script>
+        $("#chart").kendoChart({
+            series: [{
+                data: [1]
+            }]
+        });
+
+        $("#export").on("click", function () {
+            var chart = $("#chart").data("kendoChart");
+            var imageDataURL = chart.imageDataURL();
+
+            if (navigator.msSaveBlob) {
+                var blob = toBlob(imageDataURL, "image/png");
+                navigator.msSaveBlob(blob, this.getAttribute("download"));
+            } else {
+                this.href = imageDataURL;
+            }
+        });
+
+        function toBlob(base64, type) {
+            var rawData = base64.substring(base64.indexOf("base64,") + 7);
+            var data = atob(rawData);
+            var arr = new Uint8Array(data.length);
+
+            for (var i = 0; i < data.length; ++i) {
+                arr[i] = data.charCodeAt(i);
+            }
+
+            return new Blob([arr.buffer], {
+                type: type
+            });
+        }
+    </script>
+
+</body>
+
+</html>
