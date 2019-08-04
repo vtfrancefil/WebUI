@@ -31,49 +31,47 @@
         </div>
     </nav>
     <div class="container-fluid">
+        <section>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label class="radio-inline"><input type="radio" id="optradio1" value="1" name="optradio">Option
+                        1</label>
+                    <label class="radio-inline"><input type="radio" id="optradio2" value="2" name="optradio">Option
+                        2</label>
+                    <label class="radio-inline"><input type="radio" id="optradio3" value="3" name="optradio">Option
+                        3</label>
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <label class="radio-inline"><input type="radio" id="optradio1" value="1" name="optradio">Option
-                    1</label>
-                <label class="radio-inline"><input type="radio" id="optradio2" value="2" name="optradio">Option
-                    2</label>
-                <label class="radio-inline"><input type="radio" id="optradio3" value="3" name="optradio">Option
-                    3</label>
+                    <button type="button" class="btn btn-danger" id="btnRadio">button</button>
+                    <div id="radiotext"></div>
 
-                <button type="button" class="btn btn-danger" id="btnRadio">button</button>
-                <div id="radiotext"></div>
-
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="btn-group" data-toggle="buttons" id="state">
-                    <label class="btn btn-primary">
-                        <input type="radio" name="options" id="option1" autocomplete="off"> Radio 1
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> Radio 2
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="radio" name="options" id="option3" autocomplete="off"> Radio 3
-                    </label>
                 </div>
             </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="btn-group" role="group" aria-label="Basic example" id="selector">
-                    <button type="button" class="btn btn-secondary">Left</button>
-                    <button type="button" class="btn btn-secondary">Middle</button>
-                    <button type="button" class="btn btn-secondary">Right</button>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="btn-group" data-toggle="buttons" id="state">
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option1" autocomplete="off"> Radio 1
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option2" autocomplete="off"> Radio 2
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option3" autocomplete="off"> Radio 3
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="btn-group" role="group" aria-label="Basic example" id="selector">
+                        <button type="button" class="btn btn-secondary">Left</button>
+                        <button type="button" class="btn btn-secondary">Middle</button>
+                        <button type="button" class="btn btn-secondary">Right</button>
+                        <div id="txtselector"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
 
@@ -84,15 +82,12 @@
     <script src="lib/kendo/js/cultures/kendo.culture.en-GB.min.js"></script>
     <script src="lib/kendo/js/cultures/kendo.culture.fr-FR.min.js"></script>
     <script>
-        $(document).ready(function () {
-            kendo.culture("en-GB");
-            document.getElementById("culture-name").innerHTML = kendo.culture().name;
-            $("#optradio2").prop("checked", true);
-            $("#state > label:nth-child(2)").trigger("click");
+        function showDateTime(){
             setInterval(function () {
                 document.getElementById("display-time").innerHTML = kendo.toString(new Date(), "g");
             }, 1000);
-
+        }
+        function manipulateRadio(){
             $("#btnRadio").click(function () {
                 $("#radiotext").text($("input[name=optradio]:checked").val());
             });
@@ -101,11 +96,23 @@
                 $(this).addClass('active').siblings().removeClass('active');
                 $(this).removeClass("btn-secondary").addClass("btn-primary");
                 $(this).siblings().addClass("btn-secondary").removeClass("btn-primary");
+                $("#txtselector").text($(this).text());
             });
-            
-            $("#state > label").on('click', function(){
+
+            $("#state > label").on('click', function () {
                 console.log($(this).text().trim());
             });
+
+            $("#optradio2").prop("checked", true);
+            $("#state > label:nth-child(2)").trigger("click");
+            $("#selector button")[0].click();
+        }
+
+        $(document).ready(function () {
+            kendo.culture("en-GB");
+            document.getElementById("culture-name").innerHTML = kendo.culture().name;  
+            showDateTime();
+            manipulateRadio();
 
         });
     </script>
