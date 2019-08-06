@@ -12,6 +12,36 @@
     <link rel="stylesheet" href="lib/kendo/styles/kendo.bootstrap.min.css" />
     <link rel="stylesheet" href="lib/lato/latofonts.css" />
     <link rel="stylesheet" href="lib/lato/latostyle.css" />
+    <script src="sampling.js"></script>
+
+    <style>
+        .tol-value {
+            font-size: 2vh;
+            line-height: 2vh;
+            margin: 2px;
+            text-decoration: underline;
+        }
+
+        .tol-value-limit {
+            color: red;
+        }
+
+        .tol-value-target {
+            color: green;
+        }
+
+        .tol-label {
+            font-size: 1vh;
+            font-weight: bold;
+            line-height: 1vh;
+        }
+        .control-name{
+            font-size: 2vh;
+        }
+        .row-bottom{
+            border-bottom: solid 1px #e5e5e5;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,6 +61,8 @@
         </div>
     </nav>
     <div class="container-fluid">
+        <label id="lblvale"><input type="text" name="pin" maxlength="9" size="9" value="250.00" disabled></label>
+        <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#basicModal">Click to open Modal</a>
         <section>
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -74,7 +106,70 @@
         </section>
     </div>
 
+    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row row-bottom">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <p class="control-name">Capacity control</p>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p class="text-center tol-value tol-value-limit">245.00</p>
+                            <p class="text-center tol-label">LCI </p>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p class="text-center tol-value tol-value-target">250.0 </p>
+                            <p class="text-center tol-label">Target </p>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p class="text-center tol-value tol-value-limit">255.0 </p>
+                            <p class="text-center tol-label">LCS </p>
+                        </div>
+                    </div>
+                    <div class="row row-bottom">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <p class="control-name">Empty weight</p>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p class="text-center tol-value tol-value-limit">245.0</p>
+                            <p class="text-center tol-label">LCI </p>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p class="text-center tol-value tol-value-target">250.0 </p>
+                            <p class="text-center tol-label">Target </p>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p class="text-center tol-value tol-value-limit">255.0 </p>
+                            <p class="text-center tol-label">LCS </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <p class="control-name">Proposed empty weight</p>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p class="text-center tol-value tol-value-limit">245.0</p>
+                            <p class="text-center tol-label">LCI </p>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p class="text-center tol-value tol-value-target">250.0 </p>
+                            <p class="text-center tol-label">Target </p>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <p class="text-center tol-value tol-value-limit">255.0 </p>
+                            <p class="text-center tol-label">LCS </p>
+                        </div>
 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="lib/jquery/dist/jquery.js"></script>
     <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="lib/kendo/js/kendo.all.min.js"></script>
@@ -82,12 +177,19 @@
     <script src="lib/kendo/js/cultures/kendo.culture.en-GB.min.js"></script>
     <script src="lib/kendo/js/cultures/kendo.culture.fr-FR.min.js"></script>
     <script>
-        function showDateTime(){
+        function validSamplingWgtCapa(sampling, elem) {
+            var emptywgt = sampling.listControls.find(x => x.reserveCode === 'cCodeCtrlPoidsAVide');
+            var capa = sampling.listControls.find(x => x.reserveCode === 'cCodeCtrlPoidsCapa');
+
+        }
+
+        function showDateTime() {
             setInterval(function () {
                 document.getElementById("display-time").innerHTML = kendo.toString(new Date(), "g");
             }, 1000);
         }
-        function manipulateRadio(){
+
+        function manipulateRadio() {
             $("#btnRadio").click(function () {
                 $("#radiotext").text($("input[name=optradio]:checked").val());
             });
@@ -110,7 +212,7 @@
 
         $(document).ready(function () {
             kendo.culture("en-GB");
-            document.getElementById("culture-name").innerHTML = kendo.culture().name;  
+            document.getElementById("culture-name").innerHTML = kendo.culture().name;
             showDateTime();
             manipulateRadio();
 
